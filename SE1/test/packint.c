@@ -27,5 +27,7 @@ int main( int argc, char *argv[] ){
         putc( v & DATA_MASK | FINAL_MASK, f );
     }
     fclose( f );
+
+
     return 0;
 }
