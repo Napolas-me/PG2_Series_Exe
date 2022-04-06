@@ -16,7 +16,7 @@ char *cutEndingSpaces( char *str ){
 	int sizeString = sizeof(str)/sizeof(str[0]); // tamanho da string aka numero de elementos
 
 	for(int i = sizeString - 1;; i--){
-		if(str[i] != SPACE  && str[i] != TAB && str[i] != CHANGE_LINE){
+		if(str[i] != SPACE || str[i] != TAB || str[i] != CHANGE_LINE){
 			str[i+1] = '\0';
 			break;
 		}
