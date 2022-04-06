@@ -1,5 +1,7 @@
-make a.out --dry-run --keep-going --print-directory
-make: Entering directory '/home/napolas/PG2/Series Exercicios/Serie_1/Séries de exercícios-20220404/SE1/Ex2'
-make: Nothing to be done for 'a.out'.
-make: Leaving directory '/home/napolas/PG2/Series Exercicios/Serie_1/Séries de exercícios-20220404/SE1/Ex2'
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/napolas/PG2/Series Exercicios/PG2_Series_Exe/SE1/Ex2'
+gcc -c -g stringExe.c
+gcc -c -g stringMan.c
+gcc -g -o stringExe stringExe.o stringMan.o
+make: Leaving directory '/home/napolas/PG2/Series Exercicios/PG2_Series_Exe/SE1/Ex2'
  
