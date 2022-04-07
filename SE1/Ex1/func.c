@@ -4,7 +4,7 @@ int signExtend(int value, int size){// size is n x 7, multiple of 7, size is the
     
     int mask1 = (-1 << size ); //place zeros in the location of value to store with size size
     //int mask2 = ( -1 >> (sizeof(int) - size) );
-    int mask2=0;
+    int mask2 = 0;
     
     for(int i = 0; i <= size - 1; i++) {
         mask2 = mask2 | 0x1;
