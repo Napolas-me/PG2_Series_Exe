@@ -1,5 +1,5 @@
 #include "stringMan.h"
-#include "string.h"
+#include <string.h>
 
 enum stringTypes{
 	SPACE = ' ',
@@ -9,9 +9,7 @@ enum stringTypes{
 };
 
 char *cutEndingSpaces( char *str ){
-	while(*str == SPACE || *str == TAB || *str == SPACE){ // skip aos n-elementos que contenham os tipos a eliminar
-		*str++;
-	}
+	while(*str == SPACE || *str == TAB || *str == SPACE) *str++; // skip aos n-elementos que contenham os tipos a eliminar
 
 	if(str[0] == '\0') return str;
 	
@@ -29,41 +27,39 @@ char *cutEndingSpaces( char *str ){
 
 int fields(char *line, char *ptrs[], int max_fields ){
 	
-		/*Calcular a quantidade de campos existente */
+	/*Calcular a quantidade de campos existente */
 	
-	 int campos = 0; // Campos existentes em line
+	int fields = 0; // fields existentes em line
 	
-	 int sizeString = sizeof(line)/sizeof(line[0]); // Tamanho de line 
-	
-     for(int i = 0, i > sizeString - 1, i++) // Contar a quantidade de ";" existentes em line
-		{
-			if(line[i] == FIELD_SEP)
-				campos++;
-		}
-     
-	 if (campos > 0 )	// Existe sempre +1 campo do que ";" 
-			campos++;
-			
-			
-			/* Separar os campos */
-			
-	 		
-	 char token = strtok(line, FIELD_SEP) //"breaks string into a series of tokens using the delimiter"
-	 
-	 for (int i = 0, token != NULL, I++)
-		{	
-			ptrs[i] = token ;
-			token = strtok(NULL, FIELD_SEP) // Usamos o NULL para indicar a função que a pesquisa deve continuar no ponteiro anterior 
-		}
-			
-			/* limpar os campos */
+	//int sizeString = sizeof(line)/sizeof(*line); // Tamanho de line
 
-			
-     for(int i = 0, i < max_fields , i++)   // retirar espaços usando a função cutEndingSpaces
-		{
-			ptrs[i] = cutEndingSpaces(ptrs[i])
-		}
+	// Contar a quantidade de ";" existentes em line
+	//comprimi a contagem para dentro de um unico for
+	/*
+	for(int i = 0; i <= sizeString; i++) {
+		if(line[i] == FIELD_SEP || line[i] == '\0') fields++;
+	}*/
+
+	// Existe sempre +1 campo do que ";"
+	// Em principio esta corrigido no if em cima
+	// if (fields > 0) fields++;
 		
+	/* Separar os campos */
 		
-	 return campos;
+	char *token = strtok(line, FIELD_SEP); //"breaks string into a series of tokens using the delimiter"
+	//fields++;
+	
+	for(int i = 0; token != NULL; i++){	
+		fields++;
+		ptrs[i] = cutEndingSpaces(token);
+		token = strtok(NULL, FIELD_SEP); // Usamos o NULL para indicar a função que a pesquisa deve continuar no ponteiro anterior 
+	}
+		
+	/* limpar os campos */
+
+	// retirar espaços usando a função cutEndingSpaces
+	//reduçao de numero de FORs	
+	//for(int i = 0; i < max_fields ; i++) ptrs[i] = cutEndingSpaces(ptrs[i]);
+	
+	return fields;
 }
