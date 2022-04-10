@@ -1,7 +1,7 @@
 #include "stringMan.h"
 #include <stdio.h>
 
-#define MAX_SIZE 4
+#define MAX_SIZE 5
 
 void printChanges(char* ini, char* change);
 
@@ -12,13 +12,13 @@ int main(int argc, char* argv[]){
     char* returnTest1 = 0;
     char* returnTest2[MAX_SIZE];
 
-    returnTest1 = cutEndingSpaces(simpleTestString);
-    printChanges(simpleTestString, returnTest1);
+    //returnTest1 = cutEndingSpaces(simpleTestString);
+    //printChanges(simpleTestString, returnTest1);
 
-    /*int numFields = fields(complexExample, returnTest2, MAX_SIZE);
+    int numFields = fields(complexExample, returnTest2, MAX_SIZE);
 
     for(int i = 0; i < MAX_SIZE; i++) printf("ptrs[%d] = %s\n", i, returnTest2[i]);
-    printf("The number of fields was %d", numFields);*/
+    printf("The number of fields was %d\n", numFields);
 
     return 0;
 }

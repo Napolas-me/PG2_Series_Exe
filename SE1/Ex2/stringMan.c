@@ -12,12 +12,14 @@
 enum stringTypes{
     SPACE = ' ',
     TAB = '\t',
-    CHANGE_LINE = '\n'
+    CHANGE_LINE = '\n',
+	FIELD_SEP = ';'
 };
 
-char FIELD_SEP[MAX_CHAR_VAL] = ";";
+//char FIELD_SEP[MAX_CHAR_VAL] = ";";
 
 char *cutEndingSpaces( char *str ){
+	//printf("String:%s:\n", str);
 	
 	while(*str == SPACE || *str == TAB || *str == CHANGE_LINE) *str++; // skip aos n-elementos que contenham os tipos a eliminar
 
@@ -26,13 +28,13 @@ char *cutEndingSpaces( char *str ){
 	int sizeString = strlen(str) - 1; // tamanho da string aka numero de elementos
 
 	for(int i = sizeString;; i--){
-		printf("%d : %c;\n",i , str[i]);
+		//printf("%d : %c;\n",i , str[i]);
 		if(str[i] != SPACE && str[i] != TAB && str[i] != CHANGE_LINE){
 			str[i+1] = '\0';
 			break;
 		}
 	}
-
+	//printf("String:%s:\n", str);
 	return str;
 }
 
@@ -41,23 +43,40 @@ int fields(char *line, char *ptrs[], int max_fields ){
 	/*Calcular a quantidade de campos existente */
 	
 	int fields = 0; // fields existentes em line
-	
-	int sizeString = sizeof(line)/sizeof(*line); // Tamanho de line
 
 	// Contar a quantidade de ";" existentes em line
 	
-	for(int i = 0; i <= sizeString; i++) {
-		if(line[i] == FIELD_SEP[0] || line[i] == '\0') fields++;
+	for(int i = 0;; i++) {
+		if(line[i] == FIELD_SEP) fields++;
+		if(line[i] == '\0'){
+			fields++;
+			break;
+		}
 	}
 		
 	/* Separar os campos */
-		
-	char *token = strtok(line, FIELD_SEP); //"breaks string into a series of tokens using the delimiter"
-	
-	for(int i = 0; i < max_fields; i++){	
-		ptrs[i] = cutEndingSpaces(token);
-		token = strtok(NULL, FIELD_SEP); // Usamos o NULL para indicar a função que a pesquisa deve continuar no ponteiro anterior 
+	char sep[strlen(line)];
+
+	// i --> iteraçao de line
+	// j --> iteraçao de ptrs
+	// k --> iteraçao de sep 
+
+	for(int i = 0, j = 0, k = 0; j < max_fields; i++){
+
+		if(line[i] == FIELD_SEP || line[i] == '\0'){
+			sep[k] = '\0';
+			ptrs[j] = cutEndingSpaces(sep);
+			//printf("[%s]\n", ptrs[j]);
+			j++;
+			k = 0;
+			sep[k] = '\0';
+		}
+		else{
+			sep[k] = line[i];
+			k++;
+		}
 	}
+	//for(int i = 0; i < max_fields; i++) printf("[%s]\n", ptrs[i]);
 	
 	return fields;
 }
