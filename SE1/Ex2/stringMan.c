@@ -31,14 +31,14 @@ int fields(char *line, char *ptrs[], int max_fields ){
 	
 	int fields = 0; // fields existentes em line
 	
-	//int sizeString = sizeof(line)/sizeof(*line); // Tamanho de line
+	int sizeString = sizeof(line)/sizeof(*line); // Tamanho de line
 
 	// Contar a quantidade de ";" existentes em line
 	//comprimi a contagem para dentro de um unico for
-	/*
+	
 	for(int i = 0; i <= sizeString; i++) {
 		if(line[i] == FIELD_SEP || line[i] == '\0') fields++;
-	}*/
+	}
 
 	// Existe sempre +1 campo do que ";"
 	// Em principio esta corrigido no if em cima
@@ -49,8 +49,7 @@ int fields(char *line, char *ptrs[], int max_fields ){
 	char *token = strtok(line, FIELD_SEP); //"breaks string into a series of tokens using the delimiter"
 	//fields++;
 	
-	for(int i = 0; token != NULL; i++){	
-		fields++;
+	for(int i = 0; i < max_fields; i++){	
 		ptrs[i] = cutEndingSpaces(token);
 		token = strtok(NULL, FIELD_SEP); // Usamos o NULL para indicar a função que a pesquisa deve continuar no ponteiro anterior 
 	}
