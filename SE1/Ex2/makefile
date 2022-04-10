@@ -1,5 +1,6 @@
 LDFLAGS = -g
 CFLAGS = -c -g
+
 stringExe: stringExe.o stringMan.o
 	gcc $(LDFLAGS) -o stringExe stringExe.o stringMan.o
 
