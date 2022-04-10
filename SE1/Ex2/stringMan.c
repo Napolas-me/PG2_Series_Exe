@@ -23,52 +23,16 @@ char *cutEndingSpaces( char *str ){
 
 	if(str[0] == '\0') return str;
 
-	//printf("Cur Array -> (%s)\n", str);
+	int sizeString = strlen(str) - 1; // tamanho da string aka numero de elementos
 
-	//char* aux = str;
-
-	//printf("checkpoint 1\n");
-	int times = 0;
-	while(*str != SPACE && *str != TAB && *str != CHANGE_LINE){
-		//printf("%s", str);
-		times++;
-		*str++;
-	}
-	printf("times = %d\n", times);
-
-	printf("str last char-> (%s)\n", str);
-
-	if(*str == '\0') return str;
-	else str = '\0';
-
-	//printf("checkpoint 2\n");
-
-	while(times > 0){
-		printf("1");
-		*str--;
-		times--;
-	}
-
-	printf("Cur Array -> (%s)\n", str);
-
-	//right till here
-	//printf("sizeofString = %ld", sizeof(*str));
-	//printf("sizeofString[0] = %ld", sizeof(str[0]));
-
-	/*int sizeString = 0 ;//sizeof(str)/sizeof(str[0]); // tamanho da string aka numero de elementos
-	for(int i = 0; aux[i] != '\0'; i++) ++sizeString;
-
-	printf("sizeString = %d", sizeString);
-
-	for(int i = sizeString - 1;; i--){
-		printf("iter %d/n", i);
-
-		if(str[i] != SPACE || str[i] != TAB || str[i] != CHANGE_LINE){
+	for(int i = sizeString;; i--){
+		printf("%d : %c;\n",i , str[i]);
+		if(str[i] != SPACE && str[i] != TAB && str[i] != CHANGE_LINE){
 			str[i+1] = '\0';
 			break;
 		}
-	}*/
-	printf("checkpoint 3\n");
+	}
+
 	return str;
 }
 

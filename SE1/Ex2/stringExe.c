@@ -5,8 +5,8 @@
 
 void printChanges(char* ini, char* change);
 
-char* simpleTestString = "\t Teste\n  ";
-char* complexExample = "primeiro campo;; terceiro campo \t; ; palavras do quinto campo 1234\n";
+char simpleTestString[] = " palavras do quinto campo 1234\n";
+char complexExample[] = "primeiro campo;; terceiro campo \t; ; palavras do quinto campo 1234\n";
 
 int main(int argc, char* argv[]){
     char* returnTest1 = 0;
@@ -24,6 +24,6 @@ int main(int argc, char* argv[]){
 }
 
 void printChanges(char* ini, char* change){
-    printf("%s --> ", ini);
-    printf("%s\n", change);   
+    printf("[%s]-->", ini);
+    printf("(%s)\n", change);   
 }
