@@ -59,28 +59,15 @@ int fields(char *line, char *ptrs[], int max_fields ){
 
 	// i --> iteraçao de line
 	// j --> iteraçao de ptrs
-	int flag = 0;
+	int last = 0;
 
 	for(int i = 0, j = 0; j < max_fields; i++){
-		
 		if(line[i] == FIELD_SEP || line[i] == '\0'){
-			if(line[i] == '\0'){
-				ptrs[j] = cutEndingSpaces(line);
-				break;	
-			}
-			printf("%d\n", i);
 			line[i] = '\0';
-			ptrs[j] = cutEndingSpaces(line);
+			ptrs[j] = cutEndingSpaces(line + last);
+			last = i + 1;
 			j++;
-			i = 0;
-			flag = 1;
-			while(*line != FIELD_SEP) *line++;
-			printf("%c\n", line[i]);
 		}
-		if(flag){
-			flag = 0;
-			continue;
-		} 
 	}
 	return fields;
 }
