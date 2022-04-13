@@ -1,11 +1,17 @@
+/**
+ * @file stringMan.c
+ * @author Group 14
+ * @brief File holding the functions used in exe2
+ * @version 0.1
+ * @date 2022-04-10
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+
 #include "stringMan.h"
 #include <string.h>
 #include <stdio.h>
-
-//#define	SPACE ' '
-//#define	TAB '\t'
-//#define	CHANGE_LINE '\n'
-//#define	FIELD_SEP ';'
 
 #define MAX_CHAR_VAL 2
 
@@ -15,11 +21,13 @@ enum stringTypes{
     CHANGE_LINE = '\n',
 	FIELD_SEP = ';'
 };
-
-//char FIELD_SEP[MAX_CHAR_VAL] = ";";
-
+/**
+ * @brief Function to cut the ending spaces from a pointer to a string passed by argument
+ * 
+ * @param str string with spaces
+ * @return pointer to the string with ending spaces removed 
+ */
 char *cutEndingSpaces( char *str ){
-	//printf("String:%s:\n", str);
 	
 	while(*str == SPACE || *str == TAB || *str == CHANGE_LINE) *str++; // skip aos n-elementos que contenham os tipos a eliminar
 
@@ -28,16 +36,22 @@ char *cutEndingSpaces( char *str ){
 	int sizeString = strlen(str) - 1; // tamanho da string aka numero de elementos
 
 	for(int i = sizeString;; i--){
-		//printf("%d : %c;\n",i , str[i]);
 		if(str[i] != SPACE && str[i] != TAB && str[i] != CHANGE_LINE){
 			str[i+1] = '\0';
 			break;
 		}
 	}
-	//printf("String:%s:\n", str);
 	return str;
 }
-
+/**
+ * @brief Function to separate strings from a line.
+ * The separator element is ';'
+ * 
+ * @param line line to evaluate
+ * @param ptrs array of pointers with diferent starting points of line
+ * @param max_fields max number of fields in ptrs
+ * @return number of real fields in line 
+ */
 int fields(char *line, char *ptrs[], int max_fields ){
 	
 	/*Calcular a quantidade de campos existente */
@@ -55,13 +69,12 @@ int fields(char *line, char *ptrs[], int max_fields ){
 	}
 		
 	/* Separar os campos */
-	//char sep[strlen(line)];
 
 	// i --> iteraçao de line
 	// j --> iteraçao de ptrs
 	int last = 0;
 
-	for(int i = 0, j = 0; j < max_fields; i++){
+	for(int i = 0, j = 0; j < max_fields || i + 1 < sizeof(line); i++){
 		if(line[i] == FIELD_SEP || line[i] == '\0'){
 			line[i] = '\0';
 			ptrs[j] = cutEndingSpaces(line + last);

@@ -1,3 +1,13 @@
+/**
+ * @file stringExe.c
+ * @author Group 14
+ * @brief Test program to test stringMan functionalities 
+ * @version 0.1
+ * @date 2022-04-11
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #include "stringMan.h"
 #include <stdio.h>
 
