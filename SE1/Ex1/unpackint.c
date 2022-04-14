@@ -27,6 +27,20 @@ int main(int argc, char* argv[]){
      *  NEW CODE
      *  
      */
+    int v;
+    int last;
+    int result = 0;
+    while( scanf( "%x", &v ) == 1 ){
+       /* last = ( (v >> (DATA_SIZE +1) ) & 0x1 );
+        int counter = 0;
+        while ( !last ){
+            result |= ( (v & DATA_MASK) << (DATA_SIZE * counter) );
+            counter ++;
+        }
+        result <<= DATA_SIZE * counter;
+        result |= signExtend();*/
+        printf("%x", v);
+    }
     
     fclose(f);
     return 0;
