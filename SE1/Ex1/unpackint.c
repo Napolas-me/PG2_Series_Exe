@@ -47,15 +47,15 @@ int main(int argc, char* argv[]){
         //printf("the last is %x \n", last);
         
         if (!last ){
-            int chungus = ( (c & DATA_MASK) << (DATA_SIZE * counter2) );
-            //printf("\nchungus is %x\n", chungus);
-            result = result | chungus;
+            int before = ( (c & DATA_MASK) << (DATA_SIZE * counter2) );
+            //printf("\nbefore is %x\n", before);
+            result = result | before;
             counter2 ++;
         } 
         else if (counter2 == 4) {
-            int bigus = (c & LAST_DATA_MASK) << ((DATA_SIZE * (counter2 - 1)) + 7);
-            //printf("\nbigus is %x\n", bigus);
-            result = result | bigus ; //(c & LAST_DATA_MASK) << ((DATA_SIZE * counter2) + 4);
+            int final = (c & LAST_DATA_MASK) << ((DATA_SIZE * (counter2 - 1)) + 7);
+            //printf("\nfinal is %x\n", final);
+            result = result | final ; //(c & LAST_DATA_MASK) << ((DATA_SIZE * counter2) + 4);
             counter2 = 0;
             //printf("\nthe result is %08x \nresult in dec: %d \n", result, result);
             printf("%d \n", result);
@@ -63,9 +63,9 @@ int main(int argc, char* argv[]){
         }
         else {
                  //printf("counter2 %d \n", counter2);
-            int bigus = ( (c & DATA_MASK) << (DATA_SIZE * counter2) );
-            //printf("\nbigus smaller is %x\n", bigus);
-            result = result | bigus;
+            int final = ( (c & DATA_MASK) << (DATA_SIZE * counter2) );
+            //printf("\nfinal smaller is %x\n", final);
+            result = result | final;
             result = signExtend( result , (DATA_SIZE * (counter2 + 1) ) );
             counter2 = 0;
             printf("%d \n", result);
