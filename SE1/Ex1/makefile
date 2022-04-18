@@ -9,8 +9,15 @@ func.o: func.c func.h
 
 unpackint.o: unpackint.c func.h
 	gcc $(CFLAGS) unpackint.c
+
+packint: packint.o 
+	gcc $(LFLAGS) -o packint packint.o 
+
+packint.o: packint.c 
+	gcc $(CFLAGS) packint.c
+
 clean:
-	rm *.o unpackint
+	rm *.o unpackint packint
 
 debug: unpackint
 	insight unpackint
