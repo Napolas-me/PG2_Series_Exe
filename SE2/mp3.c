@@ -13,7 +13,6 @@
 void tagArrInit( TagArr_t *data ){
     //data = malloc(sizeof *data); //not sure
     data->count = 0;
-    //*data->tags = NULL; //what do i do here
 }
 
 int tagArrAdd( TagArr_t *data, MP3Tag_t *tag ){
@@ -23,18 +22,21 @@ int tagArrAdd( TagArr_t *data, MP3Tag_t *tag ){
     return 0;
 }
 
-int artistCompare(const MP3Tag_t *t1, const MP3Tag_t *t2){
-    return strcmp(*t1->album, *t2->album);
+int artistCompare(const void *t1, const void *t2){
+    return strcmp(((MP3Tag_t*) t1)->album, ((MP3Tag_t*) t2)->album);
 }
 
-int titleCompare(const MP3Tag_t *t1, const MP3Tag_t *t2){
-    return strcmp(*t1->title, *t2->title);
+int titleCompare(const void **t1, const void **t2){
+    return strcmp(((MP3Tag_t *)(*t1))->title, ((MP3Tag_t *)(*t2))->title);
 }
 
 void setupEnd( TagArr_t *data, TagRef_t *ref ){
 
-    qsort(data->tags, data->count, sizeof *data->tags, artistCompare);
-    qsort(*ref->refs,ref->count, sizeof **ref->refs, titleCompare);
+    //qsort(data->tags, data->count, sizeof *data->tags, artistCompare); //wrong
+    //qsort(ref->refs,ref->count, sizeof *ref->refs, titleCompare); //wrong
+
+    qsort(data->tags, data->count, sizeof(MP3Tag_t), artistCompare);
+    qsort(ref->refs,ref->count, sizeof(MP3Tag_t*), titleCompare);
 
 }
 
