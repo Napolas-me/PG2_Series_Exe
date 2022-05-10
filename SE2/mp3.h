@@ -12,6 +12,8 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
+#include <stdio.h>
 
 /*
  *
@@ -34,7 +36,7 @@ typedef struct mp3Tag_t{
     char artist[MAX_ART + 1];
     char album[MAX_ALB + 1];
     short year;
-    char comment[MAX_COM + 1]; // the last byte in coment can be used for defining the genre
+    char comment[MAX_COM + 1]; // the last byte in coment can be used for defining the track
     char track;
     char genre;
 }MP3Tag_t;
@@ -90,7 +92,7 @@ int tagArrAdd( TagArr_t *data, MP3Tag_t *tag );
  * @param t2 estrutura do tipo MP3tag_t
  * @return result of comparation using strcmp() 
  */
-int artistCompare(const MP3Tag_t *t1, const MP3Tag_t *t2);
+int artistCompare(const void *t1, const void *t2);
 
 /**
  * @brief Function to compare based on titles in MP3_Tag_t struct
@@ -99,7 +101,7 @@ int artistCompare(const MP3Tag_t *t1, const MP3Tag_t *t2);
  * @param t2 estrutura do tipo MP3tag_t
  * @return result of comparation using strcmp() 
  */
-int titleCompare(const MP3Tag_t *t1, const MP3Tag_t *t2);
+int titleCompare(const void *t1, const void *t2);
 
 /**
  * @brief Prepara os descritores dos dois arrays (de tags e de referências), 
