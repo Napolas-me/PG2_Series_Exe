@@ -51,7 +51,7 @@ int main(){
     while(1){
         printf("> ");
 
-        scanf("%s", input);
+        fgets(input, sizeof(input), stdin);
         input_ = cutEndingSpaces(input);
         
         if(input_[1] != ' ' && input_[1] != '\0'){
@@ -59,18 +59,19 @@ int main(){
             continue;
         }
 
-        switch (tolower(input[0])){
+        switch (tolower(input_[0])){
 
         case 'q':
             printf("MP3App will no shutdown....\n");
             return 0;
         
         case 'i':
-            //printf("entered import\n");
-
             tagArrInit(&tag);
 
+            //printf("GOT HERE\n"); if uncoment this it works?!
             fileName = getTitle(input_);
+            printf("%s\n", input);
+
             if(tableRead(fileName, &tag) == -1) break;
 
             tagRefInit(&tag, &tagRef);
@@ -83,18 +84,14 @@ int main(){
             break;
 
         case 't':
-            //printf("entered t\n");
-
             if(noValue){
                 printf("ERROR: No values were imported!\n");
                 break;
             }
-            command(&tag, &tagRef, input_);
+            command(&tag, &tagRef, input);
             break;
 
         case 'a':
-            //printf("entered a\n");
-
             if(noValue){
                 printf("ERROR: No values were imported!\n");
                 break;
@@ -103,8 +100,6 @@ int main(){
             break;
 
         case 's':
-            //printf("entered s\n");
-
             if(noValue){
                 printf("ERROR: No values were imported!\n");
                 break;
