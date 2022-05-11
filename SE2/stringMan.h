@@ -9,6 +9,9 @@
  * 
  */
 
+#ifndef _STRINGMAN_H_
+#define _STRINGMAN_H_
+
 #include <string.h>
 #include <stdio.h>
 
@@ -40,3 +43,5 @@ char *cutEndingSpaces( char *str );
  * @return number of real fields in line 
  */
 int fields(char *line, char *ptrs[], int max_fields );
+
+#endif
