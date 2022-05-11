@@ -14,6 +14,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdio.h>
+#include "stringMan.h"
 
 /*
  *
@@ -26,6 +27,7 @@
 #define MAX_ALB 30
 #define MAX_COM 30
 #define MAX_TAGS 1000
+#define MAX_PARAMS 7
 
 /**
  * @brief O tipo MP3Tag_t representa a informação de uma tag
@@ -116,11 +118,15 @@ int titleCompare(const void *t1, const void *t2);
 void setupEnd( TagArr_t *data, TagRef_t *ref );
 
 /**
- * @brief 
+ * @brief Esta função apresenta, em standard output, os resultados do comando inserido pelo utilizador. 
+          A linha de comando é passada à função através do parâmetro cmdLine. 
+          Para os comados a e t deve utilizar, respetivamente, o array principal e o array auxiliar de 
+          referências. Para o comando s deve utilizar a função bsearch, da biblioteca normalizada, 
+          sobre o array auxiliar de referências
  * 
- * @param data 
- * @param ref 
- * @param cmdLine 
+ * @param data estrutura do tipo TagArr_r
+ * @param ref estrutura do tipo TagRef_t
+ * @param cmdLine comando a executar (a, t, s "title")
  */
 void command( TagArr_t *data, TagRef_t *ref, char *cmdLine );
 
@@ -131,14 +137,18 @@ void command( TagArr_t *data, TagRef_t *ref, char *cmdLine );
  *******************************************/
 
 /**
- * @brief 
+ * @brief Esta função destina-se preencher o array de tags indicado por data. Deve percorrer o ficheiro 
+          de texto com nome indicado por tableName, ler os dados de cada tag, e adicioná-los ao 
+          array de tags, usando a função tagArrAdd. 
+          No caso de haver carateres de espaço nas extremidades dos campos, estes espaços devem ser 
+          eliminados. Se houver tags em que um dos campos Title e Artist seja  string vazia, a respetiva 
+          linha da tabela deve ser ignorada, não ficando registada para qualquer processamento. 
+          Esta função retorna 0, em caso de sucesso, ou -1, em caso de falha na leitura da tabela.
  * 
- * @param tableName 
- * @param data 
- * @return int 
+ * @param tableName Nome do ficheiro
+ * @param data estrutura do tipo TagArr_r
+ * @return 0 if success, -1 otherwise
  */
 int tableRead( char *tableName, TagArr_t *data );
-
-
 
 #endif

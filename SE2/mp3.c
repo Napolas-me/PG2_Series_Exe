@@ -55,6 +55,15 @@ int titleCompare(const void *t1, const void *t2){
     return title;
 }
 
+int titleCompare2(const void *t1, const void *t2){
+
+    MP3Tag_t **t1_ = (MP3Tag_t**)t1;
+    MP3Tag_t **t2_ = (MP3Tag_t**)t2;
+
+    return strcmp((*t1_)->title, (*t2_)->title);
+    
+}
+
 void setupEnd( TagArr_t *data, TagRef_t *ref ){
 
     //qsort(data->tags, data->count, sizeof *data->tags, artistCompare); //wrong
@@ -80,6 +89,7 @@ void command( TagArr_t *data, TagRef_t *ref, char *cmdLine ){
     char cmd = tolower(cmdLine[0]);
     setupEnd(data, ref);
     char *title;
+    MP3Tag_t *res;
 
     switch (cmd){
     case 'a':
@@ -111,14 +121,57 @@ void command( TagArr_t *data, TagRef_t *ref, char *cmdLine ){
     case 's':
         title = getTitle(cmdLine);
 
-        bsearch(title, ref->refs, ref->count, sizeof(MP3Tag_t*),/**/);
+        res = bsearch(title, ref->refs, ref->count, sizeof(MP3Tag_t*), titleCompare2);
+
+        if(res == NULL){
+            printf("ERROR: Title '%s' not found\n", title);
+            break;
+        }
+        else printf("%s; %s; %s; %d; %s; %c; %c\n",
+            res->album,
+            res->artist,
+            res->comment,
+            res->genre,
+            res->title,
+            res->track,
+            res->year);
         break;
     
     default:
-        printf("ERROR: Wrong command.\nTry a, t or s\nUse q to quit");
+        printf("ERROR: Wrong command.\nTry a, t or s\nUse q to quit\n");
         break;
     }
 
 }
 
-int tableRead( char *tableName, TagArr_t *data );
+int tableRead( char *tableName, TagArr_t *data ){
+    FILE *f = fopen(tableName,"r");
+    char buffer[1024];
+    char *field[MAX_PARAMS];
+    
+    if(f == NULL){
+        perror("Error opening file");
+        return -1;
+    }
+
+    int line = 1;
+    while(fgets(buffer, sizeof(buffer), f) != NULL){
+        if(line == 1){
+            line++;
+            continue;   
+        } 
+
+        fields(buffer, field, MAX_PARAMS);
+        
+        strcpy(data->tags[data->count].title, field[0]);
+        strcpy(data->tags[data->count].artist, field[1]);
+        strcpy(data->tags[data->count].album, field[2]);
+        data->tags[data->count].year = atoi(field[3]);
+        strcpy(data->tags[data->count].comment, field[4]);
+        data->tags[data->count].track = field[5][0];
+        data->tags[data->count].genre = field[6][0];
+        data->count++;
+    }
+
+    return 0;
+}
