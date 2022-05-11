@@ -1,5 +1,6 @@
 /**
  * @file mp3.h
+ * @author Group 14
  * @brief 
  * @version 0.1
  * @date 08-05-2022
@@ -76,6 +77,14 @@ typedef struct tagRef_t{
 void tagArrInit( TagArr_t *data );
 
 /**
+ * @brief Funçao para iniciar estrutura TagRef_r
+ * 
+ * @param data estrutura do tipo TagArr_r
+ * @param ref estrutura do tipo TagRef_t
+ */
+void tagRefInit(TagArr_t *data, TagRef_t *ref);
+
+/**
  * @brief Esta função adiciona ao descritor, indicado por data, uma tag, indicada por tag.
  * 
  * Retorna um código de resultado: 0, em caso de sucesso; -1, se falhar,
@@ -116,6 +125,21 @@ int titleCompare(const void *t1, const void *t2);
  * @param ref estrutura do tipo TagRef_t
  */
 void setupEnd( TagArr_t *data, TagRef_t *ref );
+
+/**
+ * @brief Get the Title of a command type string.
+ * 
+ * Exe:
+ *  char* string = "c hello";
+ *  char* title = getTitle(string);
+ *          |
+ *          ---> hello
+ *  
+ * 
+ * @param str string with title
+ * @return title
+ */
+char* getTitle(char* str);
 
 /**
  * @brief Esta função apresenta, em standard output, os resultados do comando inserido pelo utilizador. 

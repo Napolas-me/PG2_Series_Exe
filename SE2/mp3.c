@@ -1,5 +1,6 @@
 /**
  * @file mp3.c
+ * @author Group 14
  * @brief 
  * @version 0.1
  * @date 08-05-2022
@@ -12,6 +13,14 @@
 
 void tagArrInit( TagArr_t *data ){
     data->count = 0;
+}
+
+void tagRefInit(TagArr_t *data, TagRef_t *ref){
+    ref->count = data->count;
+
+    for(int i = 0; i < ref->count; i++){
+        ref->refs[i] = data->tags; 
+    }
 }
 
 int tagArrAdd( TagArr_t *data, MP3Tag_t *tag ){
@@ -78,7 +87,9 @@ char* getTitle(char* str){
     int i;
     char* title;
 
-    for(i = 2; str[i] != '\0'; i++) title[i-2] = str[i];
+    for(i = 2; str[i] != '\0'; i++){
+        title[i-2] = str[i];
+    } 
 
     title[i-2] = '\0';
     return title;
@@ -119,7 +130,7 @@ void command( TagArr_t *data, TagRef_t *ref, char *cmdLine ){
 
         break;
     case 's':
-        title = getTitle(cmdLine);
+        title = cutEndingSpaces(getTitle(cmdLine));
 
         res = bsearch(title, ref->refs, ref->count, sizeof(MP3Tag_t*), titleCompare2);
 
@@ -135,10 +146,6 @@ void command( TagArr_t *data, TagRef_t *ref, char *cmdLine ){
             res->title,
             res->track,
             res->year);
-        break;
-    
-    default:
-        printf("ERROR: Wrong command.\nTry a, t or s\nUse q to quit\n");
         break;
     }
 
