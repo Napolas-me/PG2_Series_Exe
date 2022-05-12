@@ -19,7 +19,7 @@ void tagRefInit(TagArr_t *data, TagRef_t *ref){
     ref->count = data->count;
 
     for(int i = 0; i < ref->count; i++){
-        ref->refs[i] = data->tags; 
+        ref->refs[i] = &data->tags[i]; 
     }
 }
 
@@ -66,7 +66,6 @@ int titleCompare(const void *t1, const void *t2){
 
 int titleCompare2(const void *t1, const void *t2){
 
-    //MP3Tag_t **t1_ = (MP3Tag_t**)t1;
     MP3Tag_t **t2_ = (MP3Tag_t**)t2;
 
     return strcmp(t1, (*t2_)->title);
@@ -79,13 +78,9 @@ void setupEnd( TagArr_t *data, TagRef_t *ref ){
     //qsort(ref->refs,ref->count, sizeof *ref->refs, titleCompare); //wrong
 
     qsort(data->tags, data->count, sizeof(MP3Tag_t), artistCompare);
-    qsort(ref->refs,ref->count, sizeof(MP3Tag_t*), titleCompare);
+    qsort(ref->refs, ref->count, sizeof(MP3Tag_t*), titleCompare);
 
 }
-
-/*char* getTitle(char* str){
-    return title + 2;
-}*/
 
 void command( TagArr_t *data, TagRef_t *ref, char *cmdLine ){
 
@@ -124,10 +119,10 @@ void command( TagArr_t *data, TagRef_t *ref, char *cmdLine ){
     case 's':
         title = cutEndingSpaces(cmdLine + 2);
 
-        res = bsearch(title, ref->refs, ref->count, sizeof(MP3Tag_t*), titleCompare2);
+        res = bsearch(&title, ref->refs, ref->count, sizeof(MP3Tag_t*), titleCompare2);
 
         if(res == NULL){
-            printf("ERROR: Title '%s' not found\n", title);
+            printf("Title '%s' not found\n", title);
             break;
         }
         else printf("%-31s; %-31s; %-31s; %-4d; %-30s; %-2c; %-2c\n",
