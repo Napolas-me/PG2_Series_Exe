@@ -13,7 +13,7 @@
 #include "stringMan.h"
 #include <stdio.h>
 
-#define INPUT_SIZE 100
+#define INPUT_SIZE 40
 
 char credits[] =
 "**********************************\n\n\
@@ -26,7 +26,7 @@ char credits[] =
 
 void help(){
     printf("------------------------------------------------\n");
-    printf("- To import a file use --> i <FileName>\n");
+    //printf("- To import a file use --> i <FileName>\n");
     printf("- To get the tags listed by artist use --> a\n");
     printf("- To get the tags listed by titles use --> t\n");
     printf("- To search for a title use --> s <title>\n");
@@ -36,23 +36,34 @@ void help(){
     printf("------------------------------------------------\n");
 }
 
-int main(){
+int main(int argc, char *argv[]){
+
+    if(argc < 2){
+        printf("ERROR: Not enough arguments!\nUsage: %s <input_File>\n", argv[0]);
+        return 0;
+    }
+
+    TagArr_t tag;
+    TagRef_t tagRef;
+
+    tagArrInit(&tag);
+
+    if(tableRead(argv[1], &tag) == -1);
+
+    tagRefInit(&tag, &tagRef);
 
     printf("Enter 'h' for help\n");
 
-    char input[40];
+    char input[INPUT_SIZE];
     char *input_;
-    TagArr_t tag;
-    TagRef_t tagRef;
-    char *fileName;
-
-    int noValue = 1;
 
     while(1){
         printf("> ");
 
         fgets(input, sizeof(input), stdin);
         input_ = cutEndingSpaces(input);
+
+        if(sizeof(*input_) == 1 && *input_ == '\0') continue;
         
         if(input_[1] != ' ' && input_[1] != '\0'){
             help();
@@ -64,46 +75,20 @@ int main(){
         case 'q':
             printf("MP3App will no shutdown....\n");
             return 0;
-        
-        case 'i':
-            tagArrInit(&tag);
-
-            //printf("GOT HERE\n"); if uncoment this it works?!
-            fileName = getTitle(input_);
-            printf("%s\n", input);
-
-            if(tableRead(fileName, &tag) == -1) break;
-
-            tagRefInit(&tag, &tagRef);
-            noValue = 0;
-            
-            break;
 
         case 'c':
             printf("%s", credits);
             break;
 
         case 't':
-            if(noValue){
-                printf("ERROR: No values were imported!\n");
-                break;
-            }
             command(&tag, &tagRef, input);
             break;
 
         case 'a':
-            if(noValue){
-                printf("ERROR: No values were imported!\n");
-                break;
-            }
             command(&tag, &tagRef, input_);
             break;
 
         case 's':
-            if(noValue){
-                printf("ERROR: No values were imported!\n");
-                break;
-            }
             command(&tag, &tagRef, input_);
             break;
 

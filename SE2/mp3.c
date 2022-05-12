@@ -66,10 +66,10 @@ int titleCompare(const void *t1, const void *t2){
 
 int titleCompare2(const void *t1, const void *t2){
 
-    MP3Tag_t **t1_ = (MP3Tag_t**)t1;
+    //MP3Tag_t **t1_ = (MP3Tag_t**)t1;
     MP3Tag_t **t2_ = (MP3Tag_t**)t2;
 
-    return strcmp((*t1_)->title, (*t2_)->title);
+    return strcmp(t1, (*t2_)->title);
     
 }
 
@@ -83,17 +83,9 @@ void setupEnd( TagArr_t *data, TagRef_t *ref ){
 
 }
 
-char* getTitle(char* str){
-    int i;
-    char* title;
-
-    for(i = 2; str[i] != '\0'; i++){
-        title[i-2] = str[i];
-    } 
-
-    title[i-2] = '\0';
-    return title;
-}
+/*char* getTitle(char* str){
+    return title + 2;
+}*/
 
 void command( TagArr_t *data, TagRef_t *ref, char *cmdLine ){
 
@@ -105,32 +97,32 @@ void command( TagArr_t *data, TagRef_t *ref, char *cmdLine ){
     switch (cmd){
     case 'a':
         for(int i = 0; i < data->count; i++){
-            printf("%s; %s; %s; %d; %s; %c; %c\n", 
-            data->tags[i].album, 
-            data->tags[i].artist, 
-            data->tags[i].comment, 
-            data->tags[i].genre, 
+            printf("%-31s; %-31s; %-31s; %-4d; %-30s; %-2c; %-2c\n", 
             data->tags[i].title, 
+            data->tags[i].artist, 
+            data->tags[i].album, 
+            data->tags[i].year, 
+            data->tags[i].comment, 
             data->tags[i].track, 
-            data->tags[i].year);
+            data->tags[i].genre);
         }
 
         break;
     case 't':
         for(int i = 0; i < ref->count; i++){
-            printf("%s; %s; %s; %d; %s; %c; %c\n",
-            ref->refs[i]->album,
-            ref->refs[i]->artist,
-            ref->refs[i]->comment,
-            ref->refs[i]->genre,
+            printf("%-31s; %-31s; %-31s; %-4d; %-30s; %-2c; %-2c\n",
             ref->refs[i]->title,
+            ref->refs[i]->artist,
+            ref->refs[i]->album,
+            ref->refs[i]->year,
+            ref->refs[i]->comment,
             ref->refs[i]->track,
-            ref->refs[i]->year);
+            ref->refs[i]->genre);
         }
 
         break;
     case 's':
-        title = cutEndingSpaces(getTitle(cmdLine));
+        title = cutEndingSpaces(cmdLine + 2);
 
         res = bsearch(title, ref->refs, ref->count, sizeof(MP3Tag_t*), titleCompare2);
 
@@ -138,14 +130,14 @@ void command( TagArr_t *data, TagRef_t *ref, char *cmdLine ){
             printf("ERROR: Title '%s' not found\n", title);
             break;
         }
-        else printf("%s; %s; %s; %d; %s; %c; %c\n",
-            res->album,
-            res->artist,
-            res->comment,
-            res->genre,
+        else printf("%-31s; %-31s; %-31s; %-4d; %-30s; %-2c; %-2c\n",
             res->title,
+            res->artist,
+            res->album,
+            res->year,
+            res->comment,
             res->track,
-            res->year);
+            res->genre);
         break;
     }
 
@@ -160,13 +152,9 @@ int tableRead( char *tableName, TagArr_t *data ){
         perror("Error opening file");
         return -1;
     }
+    fgets(buffer, sizeof(buffer), f);
 
-    int line = 1;
     while(fgets(buffer, sizeof(buffer), f) != NULL){
-        if(line == 1){
-            line++;
-            continue;   
-        } 
 
         fields(buffer, field, MAX_PARAMS);
         
