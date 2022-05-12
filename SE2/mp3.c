@@ -87,7 +87,7 @@ void command( TagArr_t *data, TagRef_t *ref, char *cmdLine ){
     char cmd = tolower(cmdLine[0]);
     setupEnd(data, ref);
     char *title;
-    MP3Tag_t *res;
+    MP3Tag_t **res;
 
     switch (cmd){
     case 'a':
@@ -119,20 +119,20 @@ void command( TagArr_t *data, TagRef_t *ref, char *cmdLine ){
     case 's':
         title = cutEndingSpaces(cmdLine + 2);
 
-        res = bsearch(&title, ref->refs, ref->count, sizeof(MP3Tag_t*), titleCompare2);
+        res = bsearch(title, ref->refs, ref->count, sizeof(MP3Tag_t*), titleCompare2);
 
         if(res == NULL){
             printf("Title '%s' not found\n", title);
             break;
         }
         else printf("%-31s; %-31s; %-31s; %-4d; %-30s; %-2c; %-2c\n",
-            res->title,
-            res->artist,
-            res->album,
-            res->year,
-            res->comment,
-            res->track,
-            res->genre);
+            (*res)->title,
+            (*res)->artist,
+            (*res)->album,
+            (*res)->year,
+            (*res)->comment,
+            (*res)->track,
+            (*res)->genre);
         break;
     }
 
