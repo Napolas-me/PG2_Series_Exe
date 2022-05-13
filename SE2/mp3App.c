@@ -48,7 +48,7 @@ int main(int argc, char *argv[]){
 
     tagArrInit(&tag);
 
-    if(tableRead(argv[1], &tag) == -1);
+    if(tableRead(argv[1], &tag) == -1) return 0;
 
     tagRefInit(&tag, &tagRef);
 
