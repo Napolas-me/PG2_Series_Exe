@@ -73,9 +73,10 @@ int titleCompare2(const void *t1, const void *t2){
 }
 
 void setupEnd( TagArr_t *data, TagRef_t *ref ){
-
+    
     //qsort(data->tags, data->count, sizeof *data->tags, artistCompare); //wrong
     //qsort(ref->refs,ref->count, sizeof *ref->refs, titleCompare); //wrong
+    tagRefInit(data, ref);
 
     qsort(data->tags, data->count, sizeof(MP3Tag_t), artistCompare);
     qsort(ref->refs, ref->count, sizeof(MP3Tag_t*), titleCompare);

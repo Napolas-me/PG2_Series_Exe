@@ -50,8 +50,6 @@ int main(int argc, char *argv[]){
 
     if(tableRead(argv[1], &tag) == -1) return 0;
 
-    tagRefInit(&tag, &tagRef);
-
     printf("Enter 'h' for help\n");
 
     char input[INPUT_SIZE];
