@@ -143,6 +143,7 @@ int tableRead( char *tableName, TagArr_t *data ){
     FILE *f = fopen(tableName,"r");
     char buffer[1024];
     char *field[MAX_PARAMS];
+    MP3Tag_t tag;
     
     if(f == NULL){
         perror("Error opening file");
@@ -154,14 +155,15 @@ int tableRead( char *tableName, TagArr_t *data ){
 
         fields(buffer, field, MAX_PARAMS);
         
-        strcpy(data->tags[data->count].title, field[0]);
-        strcpy(data->tags[data->count].artist, field[1]);
-        strcpy(data->tags[data->count].album, field[2]);
-        data->tags[data->count].year = atoi(field[3]);
-        strcpy(data->tags[data->count].comment, field[4]);
-        data->tags[data->count].track = field[5][0];
-        data->tags[data->count].genre = field[6][0];
-        data->count++;
+        strcpy(tag.title, field[0]);
+        strcpy(tag.artist, field[1]);
+        strcpy(tag.album, field[2]);
+        tag.year = atoi(field[3]);
+        strcpy(tag.comment, field[4]);
+        tag.track = field[5][0];
+        tag.genre = field[6][0];
+
+        if(tagArrAdd(data, &tag) == -1) return -1;
     }
 
     return 0;
