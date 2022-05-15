@@ -93,27 +93,27 @@ void command( TagArr_t *data, TagRef_t *ref, char *cmdLine ){
     switch (cmd){
     case 'a':
         for(int i = 0; i < data->count; i++){
-            printf("%-31s; %-31s; %-31s; %-4d; %-30s; %-2c; %-2c\n", 
-            data->tags[i].title, 
-            data->tags[i].artist, 
+            printf("%-31s; %-31s; %-31s; %-2c; %-31s; %-2c; %-4d\n", 
             data->tags[i].album, 
-            data->tags[i].year, 
+            data->tags[i].artist, 
             data->tags[i].comment, 
+            data->tags[i].genre, 
+            data->tags[i].title, 
             data->tags[i].track, 
-            data->tags[i].genre);
+            data->tags[i].year);
         }
 
         break;
     case 't':
         for(int i = 0; i < ref->count; i++){
-            printf("%-31s; %-31s; %-31s; %-4d; %-30s; %-2c; %-2c\n",
-            ref->refs[i]->title,
-            ref->refs[i]->artist,
+            printf("%-31s; %-31s; %-31s; %-2c; %-31s; %-2c; %-4d\n",
             ref->refs[i]->album,
-            ref->refs[i]->year,
+            ref->refs[i]->artist,
             ref->refs[i]->comment,
+            ref->refs[i]->genre,
+            ref->refs[i]->title,
             ref->refs[i]->track,
-            ref->refs[i]->genre);
+            ref->refs[i]->year);
         }
 
         break;
@@ -126,14 +126,14 @@ void command( TagArr_t *data, TagRef_t *ref, char *cmdLine ){
             printf("Title '%s' not found\n", title);
             break;
         }
-        else printf("%-31s; %-31s; %-31s; %-4d; %-30s; %-2c; %-2c\n",
-            (*res)->title,
-            (*res)->artist,
+        else printf("%-31s; %-31s; %-31s; %-2c; %-31s; %-2c; %-4d\n",
             (*res)->album,
-            (*res)->year,
+            (*res)->artist,
             (*res)->comment,
+            (*res)->genre,
+            (*res)->title,
             (*res)->track,
-            (*res)->genre);
+            (*res)->year);
         break;
     }
 
