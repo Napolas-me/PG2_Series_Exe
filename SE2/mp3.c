@@ -93,7 +93,7 @@ void command( TagArr_t *data, TagRef_t *ref, char *cmdLine ){
     switch (cmd){
     case 'a':
         for(int i = 0; i < data->count; i++){
-            printf("%-31s; %-31s; %-31s; %-2c; %-31s; %-2c; %-4d\n", 
+            printf("%-31s; %-31s; %-31s; %-2d; %-31s; %-2d; %-4d\n", 
             data->tags[i].album, 
             data->tags[i].artist, 
             data->tags[i].comment, 
@@ -106,7 +106,7 @@ void command( TagArr_t *data, TagRef_t *ref, char *cmdLine ){
         break;
     case 't':
         for(int i = 0; i < ref->count; i++){
-            printf("%-31s; %-31s; %-31s; %-2c; %-31s; %-2c; %-4d\n",
+            printf("%-31s; %-31s; %-31s; %-2d; %-31s; %-2d; %-4d\n",
             ref->refs[i]->album,
             ref->refs[i]->artist,
             ref->refs[i]->comment,
@@ -126,7 +126,7 @@ void command( TagArr_t *data, TagRef_t *ref, char *cmdLine ){
             printf("Title '%s' not found\n", title);
             break;
         }
-        else printf("%-31s; %-31s; %-31s; %-2c; %-31s; %-2c; %-4d\n",
+        else printf("%-31s; %-31s; %-31s; %-2d; %-31s; %-2d; %-4d\n",
             (*res)->album,
             (*res)->artist,
             (*res)->comment,
@@ -160,8 +160,9 @@ int tableRead( char *tableName, TagArr_t *data ){
         strcpy(tag.album, field[2]);
         tag.year = atoi(field[3]);
         strcpy(tag.comment, field[4]);
-        tag.track = field[5][0];
-        tag.genre = field[6][0];
+        //printf("genre = [%d]\n", atoi(field[6]));
+        tag.track = atoi(field[5]);
+        tag.genre = atoi(field[6]);
 
         if(tagArrAdd(data, &tag) == -1) return -1;
     }
