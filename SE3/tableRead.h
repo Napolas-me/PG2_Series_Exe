@@ -21,9 +21,9 @@
  *  processamento.
  *  Esta função retorna 0, em caso de sucesso, ou -1, em caso de falha na leitura da tabela.
  * 
- * @param tableName 
- * @param man 
- * @return int 
+ * @param tableName input file name
+ * @param man data structure of type Manage_t
+ * @return 0 if sucesse, -1 if read file error
  */
 int tableReadStore( char *tableName, Manage_t *man );
 
