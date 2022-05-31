@@ -1,6 +1,12 @@
 #include "dinamicArray.h"
 
-DinRef_t *dinRefCreate(int initSpace);
+DinRef_t *dinRefCreate(int initSpace){
+    DinRef_t *v = malloc( sizeof *v);
+    v->refs = malloc(initSpace *sizeof(MP3Tag_t*));
+    v->space = initSpace ;
+    v->count = 0;
+    return v;
+}
 
 void dinRefDelete(DinRef_t *ref);
 
