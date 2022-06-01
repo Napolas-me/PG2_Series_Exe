@@ -71,7 +71,6 @@ insucesso. Assume-se que o array foi previamente ordenado.
  * @param compar 
  * @return MP3Tag_t* 
  */
-
 MP3Tag_t *dinRefSearch(DinRef_t *ref, void *key, int(*compar)(const void *, const void *));
 
 /**

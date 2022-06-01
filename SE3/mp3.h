@@ -175,4 +175,6 @@ void command( TagArr_t *data, TagRef_t *ref, char *cmdLine );
  */
 int tableRead( char *tableName, TagArr_t *data );
 
+int titleCompare2(const void *t1, const void *t2);
+
 #endif

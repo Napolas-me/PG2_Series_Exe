@@ -46,6 +46,8 @@ int main(int argc, char *argv[]){
 
     if(tableReadStore(argv[1], man) == -1) return 0;
 
+    manSort(man);
+
     printf("Enter 'h' for help\n");
 
     char input[INPUT_SIZE];
@@ -67,6 +69,7 @@ int main(int argc, char *argv[]){
         switch (tolower(input_[0])){
 
         case 'q':
+            manDelete(man);
             printf("MP3App will no shutdown....\n");
             return 0;
 
