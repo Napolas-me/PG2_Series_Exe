@@ -3,6 +3,8 @@
 
 #include "dinamicArray.h"
 
+#define INITSPACE 4
+
 typedef struct{
 	DinRef_t *refA;
 	DinRef_t *refT;
