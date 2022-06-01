@@ -8,9 +8,8 @@
  * @copyright Copyright (c) 2022
  * 
  */
-
-#include "mp3.h"
-#include "stringMan.h"
+#include "manage.h"
+#include "tableRead.h"
 #include <stdio.h>
 
 #define INPUT_SIZE 40
@@ -43,12 +42,9 @@ int main(int argc, char *argv[]){
         return 0;
     }
 
-    TagArr_t tag;
-    TagRef_t tagRef;
+    Manage_t *man = manCreate();
 
-    tagArrInit(&tag);
-
-    if(tableRead(argv[1], &tag) == -1) return 0;
+    if(tableReadStore(argv[1], man) == -1) return 0;
 
     printf("Enter 'h' for help\n");
 
@@ -79,15 +75,18 @@ int main(int argc, char *argv[]){
             break;
 
         case 't':
-            command(&tag, &tagRef, input);
+            manCommand(man, input_);
+            //command(&tag, &tagRef, input);
             break;
 
         case 'a':
-            command(&tag, &tagRef, input_);
+            manCommand(man, input_);
+            //command(&tag, &tagRef, input_);
             break;
 
         case 's':
-            command(&tag, &tagRef, input_);
+            manCommand(man, input_);
+            //command(&tag, &tagRef, input_);
             break;
 
         case 'h':
