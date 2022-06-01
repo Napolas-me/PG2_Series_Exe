@@ -24,8 +24,8 @@ void manAddTag( Manage_t *man, MP3Tag_t *tag ){
 
 /* **********BEGIN OF COMPARE FUNCTION********** */
 int artistCompareV2(const void *t1, const void *t2){
-    const MP3Tag_t **t1_ = (MP3Tag_t**)t1; 
-    const MP3Tag_t **t2_ = (MP3Tag_t**)t2;
+    MP3Tag_t **t1_ = (MP3Tag_t**)t1; 
+    MP3Tag_t **t2_ = (MP3Tag_t**)t2;
 
     int artist = strcmp((*t1_)->artist, (*t2_)->artist);
 
@@ -68,7 +68,7 @@ void manCommand( Manage_t *man, char *cmdLine ){
 
     switch (cmd){
     case 'a':
-        dinRefScan(man->refA->refs, printTag);//refactoring code to be simpler
+        dinRefScan(man->refA, printTag);//refactoring code to be simpler
         /*
             for(int i = 0; i < man->refA->count; i++){
                 printf("%-31s; %-31s; %-31s; %-2d; %-31s; %-2d; %-4d\n", 
@@ -83,7 +83,7 @@ void manCommand( Manage_t *man, char *cmdLine ){
         */
         break;
     case 't':
-        dinRefScan(man->refT->refs, printTag);
+        dinRefScan(man->refT, printTag);
         /*for(int i = 0; i < man->refT->count; i++){
             printf("%-31s; %-31s; %-31s; %-2d; %-31s; %-2d; %-4d\n",
             man->refT->refs[i]->album,
