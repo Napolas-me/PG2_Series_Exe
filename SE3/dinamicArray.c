@@ -25,7 +25,7 @@ void dinRefScan(DinRef_t *ref, void (*action) (MP3Tag_t*)){
 }
 
 void dinRefSort (DinRef_t *ref, int (*compar)(const void *, const void*)){
-	qsort(ref->refs, ref->count, sizeof(MP3Tag_t), compar);
+	qsort(ref->refs, ref->count, sizeof(MP3Tag_t*), compar);
 }
 
 void dinRefAdd (DinRef_t *ref, MP3Tag_t *tag){
