@@ -21,7 +21,7 @@ void dinRefDelete(DinRef_t *ref){
 }
 
 void dinRefScan(DinRef_t *ref, void (*action) (MP3Tag_t*)){
-     for(int i = 0; i < ref->space; i++) action(ref->refs[i]);
+     for(int i = 0; i < ref->count; i++) action(ref->refs[i]);
 }
 
 void dinRefSort (DinRef_t *ref, int (*compar)(const void *, const void*)){
