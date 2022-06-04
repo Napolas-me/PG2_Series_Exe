@@ -101,7 +101,7 @@ void manCommand( Manage_t *man, char *cmdLine ){
 
         //dinRefScan( man->refT, void (*action)( MP3Tag_t * ));//esta Mal, tens de fazer uma funçao de açao. alias nem faz sentido isto aki
 
-        res = bsearch(title, man->refT->refs, man->refT->space, sizeof(MP3Tag_t*), titleCompare2);
+        res = bsearch(title, man->refT->refs, man->refT->count, sizeof(MP3Tag_t*), titleCompare2);
 
         if(res == NULL){
             printf("Title '%s' not found\n", title);
