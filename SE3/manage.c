@@ -63,7 +63,7 @@ void manCommand( Manage_t *man, char *cmdLine ){
 
     char cmd = tolower(cmdLine[0]);
     char *title;
-    MP3Tag_t **res;
+    MP3Tag_t *res;
 
 
     switch (cmd){
@@ -101,7 +101,9 @@ void manCommand( Manage_t *man, char *cmdLine ){
 
         //dinRefScan( man->refT, void (*action)( MP3Tag_t * ));//esta Mal, tens de fazer uma funçao de açao. alias nem faz sentido isto aki
 
-        res = bsearch(title, man->refT->refs, man->refT->space, sizeof(MP3Tag_t*), titleCompare2);
+        res = dinRefSearch(man->refT, title, titleCompare2); 
+        
+        //bsearch(title, man->refT->refs, man->refT->space, sizeof(MP3Tag_t*), titleCompare2);
 
         if(res == NULL){
             printf("Title '%s' not found\n", title);
@@ -109,13 +111,13 @@ void manCommand( Manage_t *man, char *cmdLine ){
         }
         else
         printf("%-31s; %-31s; %-31s; %-2d; %-31s; %-2d; %-4d\n",
-            (*res)->album,
-            (*res)->artist,
-            (*res)->comment,
-            (*res)->genre,
-            (*res)->title,
-            (*res)->track,
-            (*res)->year);
+            res->album,
+            res->artist,
+            res->comment,
+            res->genre,
+            res->title,
+            res->track,
+            res->year);
         break;
     }
 

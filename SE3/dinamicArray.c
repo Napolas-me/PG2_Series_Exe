@@ -15,7 +15,7 @@ void freeMp3(MP3Tag_t* tag){
 
 void dinRefDelete(DinRef_t *ref){
     //for(int i = 0; i < ref->count; i++) free(ref->refs[i]); 
-    dinRefScan(ref, freeMp3); // alternativa
+    //dinRefScan(ref, freeMp3); // alternativa
     free(ref->refs);
     free(ref);
 }
