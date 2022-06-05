@@ -1,6 +1,6 @@
 #include "dinamicArray.h"
 
-#define BLOCK_SIZE 8 // not so sure about this but ok
+#define BLOCK_SIZE 1 //only adds 1 tag space
 
 DinRef_t *dinRefCreate(int initSpace){
     DinRef_t *v = malloc( sizeof *v);
