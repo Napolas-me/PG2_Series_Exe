@@ -9,8 +9,12 @@ Manage_t *manCreate( void ){
     return manage;
 }
 
-void manDelete( Manage_t *man ){
+void freeMp3(MP3Tag_t* tag){
+    free(tag);
+}
 
+void manDelete( Manage_t *man ){
+    dinRefScan(man->refA, freeMp3);
     dinRefDelete( man->refA );
     dinRefDelete( man->refT );
     free(man);

@@ -9,13 +9,8 @@ DinRef_t *dinRefCreate(int initSpace){
     v->count = 0;
     return v;
 }
-void freeMp3(MP3Tag_t* tag){
-    free(tag);
-}
 
-void dinRefDelete(DinRef_t *ref){
-    //for(int i = 0; i < ref->count; i++) free(ref->refs[i]); 
-    //dinRefScan(ref, freeMp3); // alternativa
+void dinRefDelete(DinRef_t *ref){    
     free(ref->refs);
     free(ref);
 }
