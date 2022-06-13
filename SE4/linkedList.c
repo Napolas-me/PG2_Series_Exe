@@ -9,7 +9,7 @@
 void lAddRef( LNode **hp, MP3Tag_t *tag ){
     LNode *p, *a;
 
-    for(p = *hp; p != NULL /*&& do i do something here*/ ; a = p, p = p->next);
+    for(p = *hp; p != NULL /*&& do i do something here, maybe strcmp(tag->title, p->ref->title) > 0*/ ; a = p, p = p->next);
 
     LNode *n = malloc(sizeof *n);
     n->ref = tag;
