@@ -1,3 +1,8 @@
+#include "binTree.h"
+
+#define MAX_STR 1
+#define MAX_WORD 1
+
 void exampleSplit1( const char str[] ){
 	char sc[MAX_STR];
 	strcpy( sc, str );

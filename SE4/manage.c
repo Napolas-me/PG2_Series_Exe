@@ -5,6 +5,7 @@ Manage_t *manCreate( void ){
     
     manage->refA = dinRefCreate(INITSPACE);
     manage->refT = dinRefCreate(INITSPACE);
+    manage->bst = NULL;// arvore vazia
 
     return manage;
 }

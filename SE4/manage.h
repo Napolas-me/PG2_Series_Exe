@@ -2,12 +2,14 @@
 #define _MANAGE_H_
 
 #include "dinamicArray.h"
+#include "binTree.h"
 
 #define INITSPACE 4
 
 typedef struct{
-	DinRef_t *refA;
-	DinRef_t *refT;
+	DinRef_t *refA; // Referências para o comando “a”.
+	DinRef_t *refT; // Referências para os comandos “t” e “s”.
+	TNode *bst; // Árvore binária para pesquisar títulos por palavras isoladas
 }Manage_t;
 
 /**
