@@ -23,5 +23,14 @@ mp3App.o: mp3App.c mp3.h stringMan.h
 stringMan.o: stringMan.c stringMan.h
 	gcc $(CFLAGS) stringMan.c
 
+linkedList.o: linkedList.c linkedList.h
+	gcc $(CFLAGS) linkedList.c
+
+binTree.o: binTree.c binTree.h
+	gcc $(CFLAGS) binTree.c
+
+annex.o: annex.c annex.h
+	gcc $(CFLAGS) annex.c
+
 clean:
 	rm -f *.o
