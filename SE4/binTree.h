@@ -3,6 +3,7 @@
 
 #include "linkedList.h"
 #include <limits.h>
+#include "annex.h"
 
 typedef struct tNode{			// Nó de árvore binária de pesquisa.
 	struct tNode *left, *right;	// Ligação na árvore.

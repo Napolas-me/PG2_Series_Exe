@@ -3,6 +3,7 @@
 
 #include "dinamicArray.h"
 #include "binTree.h"
+#include "annex.h"
 
 #define INITSPACE 4
 

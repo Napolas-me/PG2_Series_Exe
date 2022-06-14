@@ -37,3 +37,7 @@ TNode *tSearch( TNode *r, char *w ){
     if(cmp < 0) return tSearch(r->left, w);
     return tSearch(r->right, w);
 }
+
+TNode* tBalance(TNode* r){
+
+}

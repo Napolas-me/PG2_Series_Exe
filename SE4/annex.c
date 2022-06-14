@@ -1,16 +1,22 @@
-#include "binTree.h"
+#include "annex.h"
 
-#define MAX_STR 1
-#define MAX_WORD 1
-
-void exampleSplit1( const char str[] ){
+char **splitStrtok( const char str[] ){
 	char sc[MAX_STR];
+	char **words = malloc(MAX_WORD);
+
 	strcpy( sc, str );
-	char *p = strtok( sc, " \t\n" );
-	while( p != NULL ){
-		printf( "%s\n", p );
-		p = strtok( NULL, " \t\n" );
+	char *p = strtok( sc, " " );
+	int i;
+
+	for(i = 0; p != NULL && i < MAX_WORD; i++){
+		words[i] = malloc(strlen(p) * CHAR_BIT);
+		words[i] = p;
+		p = strtok( NULL, " " );
 	}
+
+	words[++i] = NULL;
+
+	return words;
 }
 
 void exampleSplit2( const char str[] ){

@@ -25,7 +25,7 @@ void lDelete( LNode *h ){
     while(p != NULL){
         a = p->next;
         free(p);
-        a = p;
+        p = a;
     }
 }
 

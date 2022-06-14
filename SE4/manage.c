@@ -18,6 +18,7 @@ void manDelete( Manage_t *man ){
     dinRefScan(man->refA, freeMp3);
     dinRefDelete( man->refA );
     dinRefDelete( man->refT );
+    tDelete(man->bst);
     free(man);
 }
 
@@ -25,6 +26,12 @@ void manAddTag( Manage_t *man, MP3Tag_t *tag ){
     
     dinRefAdd(man->refA , tag);
     dinRefAdd(man->refT , tag);
+
+    char** words = splitStrtok(tag->title);
+
+    for(int i = 0; words[i] != NULL; i++){
+        tAddWordRef(man->bst, words[i], tag);
+    }
 }
 
 /* **********BEGIN OF COMPARE FUNCTION********** */
@@ -50,6 +57,8 @@ void manSort( Manage_t *man ){
 
     dinRefSort( man->refA , artistCompareV2);
     dinRefSort( man->refT , titleCompare);
+
+    
 }
 
 void printTag(MP3Tag_t* tag){
