@@ -9,8 +9,8 @@ char **splitStrtok( const char str[] ){
 	int i;
 
 	for(i = 0; p != NULL && i < MAX_WORD; i++){
-		words[i] = malloc(strlen(p) * CHAR_BIT);
-		words[i] = p;
+		//words[i] = malloc(strlen(p) + 1);
+		words[i] = strdup(p);
 		p = strtok( NULL, " " );
 	}
 

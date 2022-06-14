@@ -4,7 +4,7 @@ void tAddWordRef( TNode **rp, char *w, MP3Tag_t *tag ){
 
     if(*rp == NULL){
         TNode *n = malloc(sizeof *n);
-        n->word = malloc(strlen(w) * CHAR_BIT);//do i need to malloc string still?
+        //n->word = malloc(strlen(w) + 1);
         *n = (TNode){NULL, NULL, strdup(w)};
         lAddRef(&n, tag);
         *rp = n;
@@ -25,7 +25,7 @@ void tDelete( TNode *r ){
     tDelete(r->left);
     tDelete(r->right);
     lDelete(r->list);
-    free(r->word);//dunno about this
+    free(r->word);
     free(r);
 }
 
