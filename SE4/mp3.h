@@ -62,12 +62,6 @@ typedef struct tagRef_t{
     MP3Tag_t *refs[MAX_TAGS]; // Array de ponteiros para tag.
 }TagRef_t;
 
-/********************************
- *                              *
- * Funções para gestao de dados *
- *                              *
- ********************************/
-
 /**
  * @brief Esta função inicia o descritor de um array de tags no estado inicial, vazio, pelo que regista o
  *        valor 0 na quantidade de elementos preenchidos.
@@ -95,86 +89,4 @@ void tagRefInit(TagArr_t *data, TagRef_t *ref);
  * @return int 
  */
 int tagArrAdd( TagArr_t *data, MP3Tag_t *tag );
-
-/**
- * @brief Function to compare based on artists in MP3_Tag_t struct
- * 
- * @param t1 estrutura do tipo MP3tag_t
- * @param t2 estrutura do tipo MP3tag_t
- * @return result of comparation using strcmp() 
- */
-int artistCompare(const void *t1, const void *t2);
-
-/**
- * @brief Function to compare based on titles in MP3_Tag_t struct
- * 
- * @param t1 estrutura do tipo MP3tag_t
- * @param t2 estrutura do tipo MP3tag_t
- * @return result of comparation using strcmp() 
- */
-int titleCompare(const void *t1, const void *t2);
-
-/**
- * @brief Prepara os descritores dos dois arrays (de tags e de referências), 
- *        para dar as respostas pretendidas na fase de comandos.
- *        As ordenações devem ser realizadas com a função qsort da biblioteca normalizada.
- *        Para uniformização das soluções, pretende-se que o array principal seja ordenado pelo critério
- *        do comando a e o array auxiliar pelo critério do comando t.
- * 
- * @param data estrutura do tipo TagArr_r
- * @param ref estrutura do tipo TagRef_t
- */
-void setupEnd( TagArr_t *data, TagRef_t *ref );
-
-/**
- * @brief Get the Title of a command type string.
- * 
- * Exe:
- *  char* string = "c hello";
- *  char* title = getTitle(string);
- *          |
- *          ---> hello
- *  
- * 
- * @param str string with title
- * @return title
- */
-char* getTitle(char* str);
-
-/**
- * @brief Esta função apresenta, em standard output, os resultados do comando inserido pelo utilizador. 
-          A linha de comando é passada à função através do parâmetro cmdLine. 
-          Para os comados a e t deve utilizar, respetivamente, o array principal e o array auxiliar de 
-          referências. Para o comando s deve utilizar a função bsearch, da biblioteca normalizada, 
-          sobre o array auxiliar de referências
- * 
- * @param data estrutura do tipo TagArr_r
- * @param ref estrutura do tipo TagRef_t
- * @param cmdLine comando a executar (a, t, s "title")
- */
-void command( TagArr_t *data, TagRef_t *ref, char *cmdLine );
-
-/*******************************************
- *                                         *
- * Processamento da lista de ficheiros MP3 *
- *                                         *
- *******************************************/
-
-/**
- * @brief Esta função destina-se preencher o array de tags indicado por data. Deve percorrer o ficheiro 
-          de texto com nome indicado por tableName, ler os dados de cada tag, e adicioná-los ao 
-          array de tags, usando a função tagArrAdd. 
-          No caso de haver carateres de espaço nas extremidades dos campos, estes espaços devem ser 
-          eliminados. Se houver tags em que um dos campos Title e Artist seja  string vazia, a respetiva 
-          linha da tabela deve ser ignorada, não ficando registada para qualquer processamento. 
-          Esta função retorna 0, em caso de sucesso, ou -1, em caso de falha na leitura da tabela.
- * 
- * @param tableName Nome do ficheiro
- * @param data estrutura do tipo TagArr_r
- * @return 0 if success, -1 otherwise
- */
-int tableRead( char *tableName, TagArr_t *data );
-
-int titleCompare2(const void *t1, const void *t2);
-
 #endif

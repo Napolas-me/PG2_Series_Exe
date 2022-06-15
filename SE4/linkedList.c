@@ -40,7 +40,6 @@ void lDelete( LNode *h ){
 }
 
 void lScan( LNode *h, void (*action)( MP3Tag_t * ) ){
-
     LNode *p = h, *a;
     while(p != NULL){
         a = p->next;

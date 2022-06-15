@@ -27,7 +27,7 @@ void manAddTag( Manage_t *man, MP3Tag_t *tag ){
     dinRefAdd(man->refA , tag);
     dinRefAdd(man->refT , tag);
     
-    char str[MAX_TIT + 1];
+    char str[MAX_STR];
     strcpy(str, tag->title);
 
     char *p = strtok(str, " ");
@@ -35,7 +35,10 @@ void manAddTag( Manage_t *man, MP3Tag_t *tag ){
     while(p != NULL) tAddWordRef(man->bst, p, tag);
 }
 
-/* **********BEGIN OF COMPARE FUNCTION********** */
+/**********************************************************************/
+/************************** COMPARE FUNCS *****************************/
+/**********************************************************************/
+
 int artistCompareV2(const void *t1, const void *t2){
     MP3Tag_t **t1_ = (MP3Tag_t**)t1; 
     MP3Tag_t **t2_ = (MP3Tag_t**)t2;
@@ -52,14 +55,119 @@ int artistCompareV2(const void *t1, const void *t2){
     
     return artist;
 }
-/* **********END OF COMPARE FUNCTION********** */
+
+int titleCompare(const void *t1, const void *t2){
+    MP3Tag_t **t1_ = (MP3Tag_t**)t1;
+    MP3Tag_t **t2_ = (MP3Tag_t**)t2;
+
+    int title = strcmp((*t1_)->title, (*t2_)->title);
+
+    if(title == 0){
+        int artist = strcmp((*t1_)->artist, (*t2_)->artist);
+
+        if(artist == 0) return strcmp((*t1_)->album, (*t2_)->album);
+
+        else return artist;
+    }
+
+    return title;
+}
+
+int artistCompare(const void *t1, const void *t2){
+    const MP3Tag_t *t1_ = t1; 
+    const MP3Tag_t *t2_ = t2;
+
+    int artist = strcmp(t1_->artist, t2_->artist);
+
+    if(artist == 0){
+        int album = strcmp(t1_->album, t2_->album);
+        
+        if(album == 0) return strcmp(t1_->title, t2_->title);
+
+        else return album;
+    }
+    
+    return artist;
+}
+
+int titleCompare2(const void *t1, const void *t2){
+
+    MP3Tag_t **t2_ = (MP3Tag_t**)t2;
+
+    return strcmp(t1, (*t2_)->title);
+}
+/**********************************************************************/
+/************************** COMPARE FUNCS *****************************/
+/**********************************************************************/
 
 void manSort( Manage_t *man ){
 
     dinRefSort( man->refA , artistCompareV2);
     dinRefSort( man->refT , titleCompare);
 
+    man->bst = tBalance(man->bst);
+}
 
+void setupEnd( TagArr_t *data, TagRef_t *ref ){
+    tagRefInit(data, ref);
+
+    qsort(data->tags, data->count, sizeof(MP3Tag_t), artistCompare);
+    qsort(ref->refs, ref->count, sizeof(MP3Tag_t*), titleCompare);
+}
+
+void command( TagArr_t *data, TagRef_t *ref, char *cmdLine ){
+
+    char cmd = tolower(cmdLine[0]);
+    setupEnd(data, ref);
+    char *title;
+    MP3Tag_t **res;
+
+    switch (cmd){
+    case 'a':
+        for(int i = 0; i < data->count; i++){
+            printf("%-31s; %-31s; %-31s; %-2d; %-31s; %-2d; %-4d\n", 
+            data->tags[i].album, 
+            data->tags[i].artist, 
+            data->tags[i].comment, 
+            data->tags[i].genre, 
+            data->tags[i].title, 
+            data->tags[i].track, 
+            data->tags[i].year);
+        }
+
+        break;
+    case 't':
+        for(int i = 0; i < ref->count; i++){
+            printf("%-31s; %-31s; %-31s; %-2d; %-31s; %-2d; %-4d\n",
+            ref->refs[i]->album,
+            ref->refs[i]->artist,
+            ref->refs[i]->comment,
+            ref->refs[i]->genre,
+            ref->refs[i]->title,
+            ref->refs[i]->track,
+            ref->refs[i]->year);
+        }
+
+        break;
+    case 's':
+        title = cutEndingSpaces(cmdLine + 2);
+
+        res = bsearch(title, ref->refs, ref->count, sizeof(MP3Tag_t*), titleCompare2);
+
+        if(res == NULL){
+            printf("Title '%s' not found\n", title);
+            break;
+        }
+        else printf("%-31s; %-31s; %-31s; %-2d; %-31s; %-2d; %-4d\n",
+            (*res)->album,
+            (*res)->artist,
+            (*res)->comment,
+            (*res)->genre,
+            (*res)->title,
+            (*res)->track,
+            (*res)->year);
+        break;
+    }
 }
 
 void printTag(MP3Tag_t* tag){
@@ -73,53 +181,26 @@ void printTag(MP3Tag_t* tag){
         tag->year);
 }
 
-
 void manCommand( Manage_t *man, char *cmdLine ){
-
     char cmd = tolower(cmdLine[0]);
     char *title;
+    char **words;
+    int nWords;
     MP3Tag_t *res;
-
 
     switch (cmd){
     case 'a':
-        dinRefScan(man->refA, printTag);//refactoring code to be simpler
-        /*
-            for(int i = 0; i < man->refA->count; i++){
-                printf("%-31s; %-31s; %-31s; %-2d; %-31s; %-2d; %-4d\n", 
-                man->refA->refs[i]->album,
-                man->refA->refs[i]->artist,
-                man->refA->refs[i]->comment,
-                man->refA->refs[i]->genre,
-                man->refA->refs[i]->title,
-                man->refA->refs[i]->track,
-                man->refA->refs[i]->year);
-            }
-        */
+        dinRefScan(man->refA, printTag);
         break;
+
     case 't':
         dinRefScan(man->refT, printTag);
-        /*for(int i = 0; i < man->refT->count; i++){
-            printf("%-31s; %-31s; %-31s; %-2d; %-31s; %-2d; %-4d\n",
-            man->refT->refs[i]->album,
-            man->refT->refs[i]->artist,
-            man->refT->refs[i]->comment,
-            man->refT->refs[i]->genre,
-            man->refT->refs[i]->title,
-            man->refT->refs[i]->track,
-            man->refT->refs[i]->year);
-        }*/
-
         break;
+
     case 's':
         title = cutEndingSpaces(cmdLine + 2);
-
-        //dinRefScan( man->refT, void (*action)( MP3Tag_t * ));//esta Mal, tens de fazer uma funçao de açao. alias nem faz sentido isto aki
-
         res = dinRefSearch(man->refT, title, titleCompare2); 
         
-        //bsearch(title, man->refT->refs, man->refT->space, sizeof(MP3Tag_t*), titleCompare2);
-
         if(res == NULL){
             printf("Title '%s' not found\n", title);
             break;
@@ -134,6 +215,16 @@ void manCommand( Manage_t *man, char *cmdLine ){
             res->track,
             res->year);
         break;
-    }
+    
+    case 'f':
+        words = splitStrtok(cmdLine + 2, &nWords);
+        TNode *r;
 
+        for(int i = 0; i < nWords; i++){
+            r = tSearch(man->bst, words[i]);
+            if(r == NULL) printf("A palavra %s não consta em nenhum titulo!", words[i]);
+            else lScan(r->list, printTag);
+        }
+        break;
+    }
 }

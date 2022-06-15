@@ -9,6 +9,37 @@
  */
 #include "tableRead.h"
 
+int tableRead( char *tableName, TagArr_t *data ){
+    FILE *f = fopen(tableName,"r");
+    char buffer[1024];
+    char *field[MAX_PARAMS];
+    MP3Tag_t tag;
+    
+    if(f == NULL){
+        perror("Error opening file");
+        return -1;
+    }
+    fgets(buffer, sizeof(buffer), f);
+
+    while(fgets(buffer, sizeof(buffer), f) != NULL){
+
+        fields(buffer, field, MAX_PARAMS);
+        
+        strcpy(tag.title, field[0]);
+        strcpy(tag.artist, field[1]);
+        strcpy(tag.album, field[2]);
+        tag.year = atoi(field[3]);
+        strcpy(tag.comment, field[4]);
+        //printf("genre = [%d]\n", atoi(field[6]));
+        tag.track = atoi(field[5]);
+        tag.genre = atoi(field[6]);
+
+        if(tagArrAdd(data, &tag) == -1) return -1;
+    }
+
+    return 0;
+}
+
 int tableReadStore( char *tableName, Manage_t *man ){
 
     FILE *f = fopen(tableName,"r");

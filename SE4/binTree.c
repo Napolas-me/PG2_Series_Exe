@@ -39,5 +39,6 @@ TNode *tSearch( TNode *r, char *w ){
 }
 
 TNode* tBalance(TNode* r){
-
+    r = treeToSortedList(r, NULL);
+    return sortedListToBalancedTree(&r,tCount(r));
 }

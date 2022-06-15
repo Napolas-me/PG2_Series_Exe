@@ -62,4 +62,29 @@ aplicação, não sendo chamada a função manCommand.
  */
 void manCommand( Manage_t *man, char *cmdLine );
 
+/**
+ * @brief Esta função apresenta, em standard output, os resultados do comando inserido pelo utilizador. 
+          A linha de comando é passada à função através do parâmetro cmdLine. 
+          Para os comados a e t deve utilizar, respetivamente, o array principal e o array auxiliar de 
+          referências. Para o comando s deve utilizar a função bsearch, da biblioteca normalizada, 
+          sobre o array auxiliar de referências
+ * 
+ * @param data estrutura do tipo TagArr_r
+ * @param ref estrutura do tipo TagRef_t
+ * @param cmdLine comando a executar (a, t, s "title")
+ */
+void command( TagArr_t *data, TagRef_t *ref, char *cmdLine );
+
+/**
+ * @brief Prepara os descritores dos dois arrays (de tags e de referências), 
+ *        para dar as respostas pretendidas na fase de comandos.
+ *        As ordenações devem ser realizadas com a função qsort da biblioteca normalizada.
+ *        Para uniformização das soluções, pretende-se que o array principal seja ordenado pelo critério
+ *        do comando a e o array auxiliar pelo critério do comando t.
+ * 
+ * @param data estrutura do tipo TagArr_r
+ * @param ref estrutura do tipo TagRef_t
+ */
+void setupEnd( TagArr_t *data, TagRef_t *ref );
+
 #endif

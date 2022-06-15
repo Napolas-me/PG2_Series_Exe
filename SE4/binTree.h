@@ -42,4 +42,11 @@ void tDelete( TNode *r );
  * @return TNode* 
  */
 TNode *tSearch( TNode *r, char *w );
+/**
+ * @brief Funçao de balanceamento da arvore
+ * 
+ * @param r 
+ * @return TNode* 
+ */
+TNode* tBalance(TNode* r);
 #endif

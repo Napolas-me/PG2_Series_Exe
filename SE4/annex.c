@@ -1,31 +1,25 @@
 #include "annex.h"
 
-char **splitStrtok( const char str[] ){
+char **splitStrtok( const char str[], int *nWords){
 	char sc[MAX_STR];
-	char **words = malloc(MAX_WORD);
+	char **words = malloc(1);
+	*nWords = 0;
 
 	strcpy( sc, str );
-	char *p = strtok( sc, " " );
-	int i;
+	char *p = strtok(sc, " ");
+	//int i;
 
-	for(i = 0; p != NULL && i < MAX_WORD; i++){
-		//words[i] = malloc(strlen(p) + 1);
+	for(int i = 0; p != NULL; i++){
 		words[i] = strdup(p);
-		p = strtok( NULL, " " );
+		*nWords++;
+		words = realloc(words, i + 2);
+		p = strtok(NULL, " ");
 	}
-
-	words[++i] = NULL;
-
 	return words;
 }
 
-void exampleSplit2( const char str[] ){
-	char word[MAX_WORD];
-	int i = 0, n;
-	while( sscanf( str + i, "%s%n", word, &n ) == 1 ){
-		printf( "%s\n", word );
-		i += n;
-	}
+void freeWords(){
+
 }
 
 TNode *treeToSortedList( TNode *r, TNode *link ){
@@ -46,4 +40,8 @@ TNode* sortedListToBalancedTree(TNode **listRoot, int n) {
 	*listRoot = (*listRoot)->right;
 	parent->right = sortedListToBalancedTree(listRoot, n-(n/2 + 1) );
 	return parent;
+}
+
+int tCount( TNode *r ){
+	return r == NULL ? 0 : 1 + tCount( r->left ) + tCount( r->right );
 }
