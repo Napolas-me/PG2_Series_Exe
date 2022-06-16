@@ -6,7 +6,7 @@
 #define MAX_STR 31
 #define MAX_WORD 20
 
-char **splitStrtok( const char str[], int nWords);
+char **splitStrtok( const char str[], int *nWords);
 
 TNode *treeToSortedList( TNode *r, TNode *link );
 
