@@ -185,7 +185,7 @@ void printTag(MP3Tag_t* tag){
 
 int splitStrtok( const char str[], char **words){
 	char sc[MAX_STR];
-    char** aux = malloc(1);
+    char **aux = malloc(1);
 	int nWords = 0;
 
 	strcpy( sc, str );

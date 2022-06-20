@@ -10,7 +10,7 @@
 #include <ctype.h>
 
 #define INITSPACE 4
-#define MAX_STR 31
+#define MAX_STR 64
 #define MAX_WORD 20
 
 typedef struct{
