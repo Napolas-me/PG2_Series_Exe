@@ -235,12 +235,12 @@ void manCommand( Manage_t *man, char *cmdLine ){
         break;
     
     case 'f':
+        
         words = malloc(1);
         nWords = splitStrtok(cmdLine + 2, words);
 
-        TNode *singleWord;
-
         if(nWords == 1){
+            TNode *singleWord;
             singleWord = tSearch(man->bst, words[0]);
 
             if(singleWord == NULL) printf("A palavra %s não consta em nenhum titulo!\n", words[0]);
@@ -248,18 +248,22 @@ void manCommand( Manage_t *man, char *cmdLine ){
 
             free(words[0]);
         }else{
+            //Not working as intended
+            TNode *tp;
 
-            /*for(int i = 0; i < nWords; i++){
-            
-                r = tSearch(man->bst, words[i]);
-                if(r == NULL) printf("A palavra %s não consta em nenhum titulo!\n", words[i]);
-                else lScan(r->list, printTag);
-                
-                free(words[i]);
-            }*/
+            tp = tSearch(man->bst, words[0]);
+            free(words[0]);
 
+            if(tp != NULL){
+                for(int i = 1; i < nWords; i++){
+                    tp = tSearch(tp, words[i]);
+                    free(words[i]);  
+                }
+                if(tp == NULL) printf("As palavras não constam em nenhum titulo!\n");
+                else lScan(tp->list, printTag);
+
+            }else printf("As palavras não constam em nenhum titulo!\n");
         }
-
         free(words);
         break;
     }
