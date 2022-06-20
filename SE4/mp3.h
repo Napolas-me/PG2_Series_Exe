@@ -11,12 +11,6 @@
 #ifndef _MP3_H_
 #define _MP3_H_
 
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#include <stdio.h>
-#include "stringMan.h"
-
 /*
  *
  * Values taken from http://mpgedit.org/mpgedit/mpeg_format/mpeghdr.htm

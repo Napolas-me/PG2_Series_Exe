@@ -2,8 +2,7 @@
 #define _BIN_TREE_H_
 
 #include "linkedList.h"
-#include <limits.h>
-#include "annex.h"
+#include <stdio.h>
 
 typedef struct tNode{			// Nó de árvore binária de pesquisa.
 	struct tNode *left, *right;	// Ligação na árvore.

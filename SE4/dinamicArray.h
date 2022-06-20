@@ -12,6 +12,7 @@
 #define _DINAMIC_ARRAY_H_
 
 #include "mp3.h"
+#include <stdlib.h>
 
 typedef struct{
 	int space; //Quantidade de elementos alojados no campo refs

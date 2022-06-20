@@ -8,9 +8,11 @@
  * @copyright Copyright (c) 2022
  * 
  */
-#include "manage.h"
+//#include "manage.h"
 #include "tableRead.h"
+#include "stringMan.h"
 #include <stdio.h>
+#include <ctype.h>
 
 #define INPUT_SIZE 40
 
@@ -25,7 +27,6 @@ char credits[] =
 
 void help(){
     printf("------------------------------------------------\n");
-    //printf("- To import a file use --> i <FileName>\n");
     printf("- To get the tags listed by artist use --> a\n");
     printf("- To get the tags listed by titles use --> t\n");
     printf("- To search for a title use --> s <title>\n");

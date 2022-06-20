@@ -6,7 +6,7 @@ void tAddWordRef( TNode **rp, char *w, MP3Tag_t *tag ){
         TNode *n = malloc(sizeof *n);
         //n->word = malloc(strlen(w) + 1);
         *n = (TNode){NULL, NULL, strdup(w)};
-        lAddRef(&n, tag);
+        lAddRef(&n->list, tag);
         *rp = n;
         return;
     }
@@ -36,6 +36,30 @@ TNode *tSearch( TNode *r, char *w ){
     if(cmp == 0) return r;
     if(cmp < 0) return tSearch(r->left, w);
     return tSearch(r->right, w);
+}
+
+TNode *treeToSortedList( TNode *r, TNode *link ){
+	TNode * p;
+	if( r == NULL ) return link;
+	p = treeToSortedList( r->left, r );
+	r->left = NULL;
+	r->right = treeToSortedList( r->right, link );
+	return p;
+}
+
+TNode* sortedListToBalancedTree(TNode **listRoot, int n) {
+	if( n == 0 )
+		return NULL;
+	TNode *leftChild = sortedListToBalancedTree(listRoot, n/2);
+	TNode *parent = *listRoot;
+	parent->left = leftChild;
+	*listRoot = (*listRoot)->right;
+	parent->right = sortedListToBalancedTree(listRoot, n-(n/2 + 1) );
+	return parent;
+}
+
+int tCount( TNode *r ){
+	return r == NULL ? 0 : 1 + tCount( r->left ) + tCount( r->right );
 }
 
 TNode* tBalance(TNode* r){

@@ -1,6 +1,6 @@
 #include "linkedList.h"
 
-int titleCompare(const void *t1, const void *t2){
+int titleComparelinked(const void *t1, const void *t2){
     MP3Tag_t *t1_ = (MP3Tag_t*)t1;
     MP3Tag_t *t2_ = (MP3Tag_t*)t2;
 
@@ -19,7 +19,7 @@ int titleCompare(const void *t1, const void *t2){
 void lAddRef( LNode **hp, MP3Tag_t *tag ){
     LNode *p, *a;
 
-    for(p = *hp; p != NULL && titleCompare(tag, p->ref) > 0 ; a = p, p = p->next);
+    for(p = *hp; p != NULL && titleComparelinked(tag, p->ref) > 0 ; a = p, p = p->next);
 
     LNode *n = malloc(sizeof *n);
     n->ref = tag;

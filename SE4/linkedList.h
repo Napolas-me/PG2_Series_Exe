@@ -2,6 +2,9 @@
 #define _LINKED_LIST_H_
 
 #include "mp3.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 typedef struct lNode{	// Nó de lista ligada.
 	struct lNode *next;	// Ligação na lista.

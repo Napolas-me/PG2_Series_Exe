@@ -11,6 +11,7 @@
 #define _TABLE_READ_H
 
 #include "manage.h"
+#include <stdio.h>
 /**
  *  Esta função destina-se preencher a estrutura de dados array para acesso às tags. Deve percorrer o
  *  ficheiro de texto com o nome indicado por tableName, ler os dados de cada tag e adicionar a sua

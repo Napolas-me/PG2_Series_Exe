@@ -3,9 +3,15 @@
 
 #include "dinamicArray.h"
 #include "binTree.h"
-#include "annex.h"
+#include "stringMan.h"
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <string.h>
+#include <ctype.h>
 
 #define INITSPACE 4
+#define MAX_STR 31
+#define MAX_WORD 20
 
 typedef struct{
 	DinRef_t *refA; // Referências para o comando “a”.

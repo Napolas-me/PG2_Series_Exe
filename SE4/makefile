@@ -1,17 +1,17 @@
 LDFLAGS = -g
 CFLAGS = -c -g
 
-mp3App: mp3App.o mp3.o manage.o tableRead.o dinamicArray.o stringMan.o linkedList.o binTree.o annex.o
-	gcc $(LDFLAGS) mp3App.o mp3.o manage.o tableRead.o dinamicArray.o stringMan.o linkedList.o binTree.o annex.o -o mp3App
+mp3App: mp3App.o mp3.o manage.o tableRead.o dinamicArray.o stringMan.o linkedList.o binTree.o
+	gcc $(LDFLAGS) mp3App.o mp3.o manage.o tableRead.o dinamicArray.o stringMan.o linkedList.o binTree.o -o mp3App
 	make clean
 
 mp3App.o: mp3App.c manage.h tableRead.h
 	gcc $(CFLAGS) mp3App.c	
 
-mp3.o: mp3.c mp3.h stringMan.h
+mp3.o: mp3.c mp3.h
 	gcc $(CFLAGS) mp3.c
 
-manage.o: manage.c manage.h dinamicArray.h binTree.h annex.h
+manage.o: manage.c manage.h dinamicArray.h binTree.h
 	gcc $(CFLAGS) manage.c
 
 tableRead.o: tableRead.c tableRead.h manage.h
@@ -26,11 +26,8 @@ stringMan.o: stringMan.c stringMan.h
 linkedList.o: linkedList.c linkedList.h mp3.h
 	gcc $(CFLAGS) linkedList.c 
 
-binTree.o: binTree.c binTree.h annex.h linkedList.h
+binTree.o: binTree.c binTree.h linkedList.h
 	gcc $(CFLAGS) binTree.c
-
-annex.o: annex.c annex.h binTree.h
-	gcc $(CFLAGS) annex.c
 
 clean:
 	rm -f *.o

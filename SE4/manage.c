@@ -32,7 +32,7 @@ void manAddTag( Manage_t *man, MP3Tag_t *tag ){
 
     char *p = strtok(str, " ");
 
-    while(p != NULL) tAddWordRef(man->bst, p, tag);
+    while(p != NULL) tAddWordRef(&man->bst, p, tag);
 }
 
 /**********************************************************************/
@@ -179,6 +179,24 @@ void printTag(MP3Tag_t* tag){
         tag->title,
         tag->track,
         tag->year);
+}
+
+char **splitStrtok( const char str[], int *nWords){
+	char sc[MAX_STR];
+	char **words = malloc(1);
+	*nWords = 0;
+
+	strcpy( sc, str );
+	char *p = strtok(sc, " ");
+	//int i;
+
+	for(int i = 0; p != NULL; i++){
+		words[i] = strdup(p);
+		*nWords++;
+		words = realloc(words, i + 2);
+		p = strtok(NULL, " ");
+	}
+	return words;
 }
 
 void manCommand( Manage_t *man, char *cmdLine ){
