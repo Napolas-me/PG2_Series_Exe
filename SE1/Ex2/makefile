@@ -2,7 +2,7 @@ LDFLAGS = -g
 CFLAGS = -c -g
 
 readFromFile: readFromFile.o stringMan.o
-	gcc $(LDFLAGS)-o readFromFile readFromFile.o stringMan.o 
+	gcc $(LDFLAGS) -o readFromFile readFromFile.o stringMan.o 
 
 readFromFile.o: readFromFile.c stringMan.h
 	gcc $(CFLAGS) readFromFile.c
