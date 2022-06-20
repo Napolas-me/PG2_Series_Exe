@@ -29,6 +29,7 @@ void help(){
     printf("- To get the tags listed by artist use --> a\n");
     printf("- To get the tags listed by titles use --> t\n");
     printf("- To search for a title use --> s <title>\n");
+    printf("- To search for a title that have the waords parsed --> f <word1 word2 ... wordx>\n");
     printf("- To get help use --> h\n");
     printf("- To credits use -> c\n");
     printf("- To quit use --> q\n");
@@ -90,6 +91,10 @@ int main(int argc, char *argv[]){
         case 's':
             manCommand(man, input_);
             //command(&tag, &tagRef, input_);
+            break;
+        
+        case 'f':
+            manCommand(man, input_);
             break;
 
         case 'h':
