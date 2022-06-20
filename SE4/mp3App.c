@@ -22,7 +22,6 @@ char credits[] =
 \t      Group 14\n\n\
 \tPedro Apolinário 47579\n\n\
 \tPedro Correia 44705\n\n\
-\tTomás Mendonsa 47598\n\n\n\
 **********************************\n";
 
 void help(){
