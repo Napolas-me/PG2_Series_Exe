@@ -13,7 +13,10 @@ void tAddWordRef( TNode **rp, char *w, MP3Tag_t *tag ){
 
     int cmp = strcmp(w, (*rp)->word);
 
-    if(cmp == 0) return;
+    if(cmp == 0){
+        lAddRef(&(*rp)->list, tag);
+        return;
+    }
 
     if(cmp < 0) tAddWordRef(&(*rp)->left, w, tag);
     else tAddWordRef(&(*rp)->right, w, tag);

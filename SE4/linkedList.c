@@ -19,7 +19,7 @@ int titleComparelinked(const void *t1, const void *t2){
 void lAddRef( LNode **hp, MP3Tag_t *tag ){
     LNode *p, *a;
 
-    for(p = *hp; p != NULL && titleComparelinked(tag, p->ref) > 0 ; a = p, p = p->next);
+    for(p = *hp; p != NULL && titleComparelinked(tag, p->ref) > 0; a = p, p = p->next);
 
     LNode *n = malloc(sizeof *n);
     n->ref = tag;

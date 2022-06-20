@@ -185,7 +185,6 @@ void printTag(MP3Tag_t* tag){
 
 int splitStrtok( const char str[], char **words){
 	char sc[MAX_STR];
-    char **aux = malloc(1);
 	int nWords = 0;
 
 	strcpy( sc, str );
@@ -193,12 +192,10 @@ int splitStrtok( const char str[], char **words){
 	//int i;
 
 	for(int i = 0; p != NULL; i++){
-		aux[i] = strdup(p);
+		words[i] = strdup(p);
 		nWords++;
         p = strtok(NULL, " ");
 	}
-
-    words = aux;
 	return nWords;
 }
 
@@ -238,15 +235,29 @@ void manCommand( Manage_t *man, char *cmdLine ){
         break;
     
     case 'f':
+        words = malloc(1);
         nWords = splitStrtok(cmdLine + 2, words);
-        TNode *r;
 
-        for(int i = 0; i < nWords; i++){
-            r = tSearch(man->bst, words[i]);
-            if(r == NULL) printf("A palavra %s não consta em nenhum titulo!", words[i]);
-            else lScan(r->list, printTag);
+        TNode *singleWord;
 
-            free(words[i]);
+        if(nWords == 1){
+            singleWord = tSearch(man->bst, words[0]);
+
+            if(singleWord == NULL) printf("A palavra %s não consta em nenhum titulo!\n", words[0]);
+            else lScan(singleWord->list, printTag);
+
+            free(words[0]);
+        }else{
+
+            /*for(int i = 0; i < nWords; i++){
+            
+                r = tSearch(man->bst, words[i]);
+                if(r == NULL) printf("A palavra %s não consta em nenhum titulo!\n", words[i]);
+                else lScan(r->list, printTag);
+                
+                free(words[i]);
+            }*/
+
         }
 
         free(words);
