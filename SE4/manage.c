@@ -31,8 +31,10 @@ void manAddTag( Manage_t *man, MP3Tag_t *tag ){
     strcpy(str, tag->title);
 
     char *p = strtok(str, " ");
-
-    while(p != NULL) tAddWordRef(&man->bst, p, tag);
+    while(p != NULL){
+        tAddWordRef(&man->bst, p, tag);
+        p = strtok(NULL, " ");
+    } 
 }
 
 /**********************************************************************/
